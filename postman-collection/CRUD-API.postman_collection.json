@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "58aa2672-2e88-418c-bede-4b49aa002c28",
+		"_postman_id": "be8adf50-5303-4429-93ec-3f5c90dd7410",
 		"name": "CRUD-API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"User5\",\n    \"password\": \"user5\",\n    \"is_staff\": true\n}",
+					"raw": "{\n    \"username\": \"User8\",\n    \"password\": \"user8\",\n    \"is_staff\": true\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -46,7 +46,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"User5\",\n    \"password\": \"user5\"\n}",
+					"raw": "{\n    \"username\": \"ShubhoCH\",\n    \"password\": \"admin\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -90,7 +90,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Token 3c32b0bbdf46c0cceac94db465a218f602463130",
+						"value": "Token a41aef09fe1f78e7169b2ae00c82a446bc9225be",
 						"type": "text"
 					}
 				],
@@ -133,7 +133,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Token 3c32b0bbdf46c0cceac94db465a218f602463130",
+						"value": "Token a41aef09fe1f78e7169b2ae00c82a446bc9225be",
 						"type": "text"
 					}
 				],
@@ -176,7 +176,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Token 3c32b0bbdf46c0cceac94db465a218f602463130",
+						"value": "Token a41aef09fe1f78e7169b2ae00c82a446bc9225be",
 						"type": "text"
 					}
 				],
@@ -216,7 +216,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Token 3c32b0bbdf46c0cceac94db465a218f602463130",
+						"value": "Token a41aef09fe1f78e7169b2ae00c82a446bc9225be",
 						"type": "text"
 					}
 				],
@@ -256,13 +256,13 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Token 3c32b0bbdf46c0cceac94db465a218f602463130",
+						"value": "Token a41aef09fe1f78e7169b2ae00c82a446bc9225be",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\":6\n}",
+					"raw": "{\n    \"id\":2\n}",
 					"options": {
 						"raw": {
 							"language": "json"
