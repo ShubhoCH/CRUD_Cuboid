@@ -1,0 +1,293 @@
+{
+	"info": {
+		"_postman_id": "58aa2672-2e88-418c-bede-4b49aa002c28",
+		"name": "CRUD-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"User5\",\n    \"password\": \"user5\",\n    \"is_staff\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/addUser/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"addUser",
+						""
+					]
+				},
+				"description": "### Add Users\nFor adding a box in the database we need a user. So we have to add users first there will be two types of user \n- Normal User\n- Staff User \n### Condition\nFor Normal User, we don't need to pass the **is_staff** flag in the request body."
+			},
+			"response": []
+		},
+		{
+			"name": "User Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"User5\",\n    \"password\": \"user5\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/userLogin/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"userLogin",
+						""
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				},
+				"description": "### Login \nFor creating a box We need to login first.For login, we need two parameter \n- username (case sensitive)\n- password (Case Sensitive) \n\nAfter login, You will get the token for further authentication we need this token in Authorization Header.\n "
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Cubes (Any User)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 3c32b0bbdf46c0cceac94db465a218f602463130",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"filters\":{\n        \"length\":{\"condition\":\"gt\",\n                    \"value\": 0\n        },\n        \"breadth\":{\"condition\":\"gt\",\n                    \"value\":0\n        },\n        \"height\":{\"condition\":\"gt\",\n                    \"value\":0\n        },\n        \"volume\":{\"condition\":\"gt\",\n                    \"value\":0\n        },\n        \"area\":{\"condition\":\"gt\",\n                    \"value\":0\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/getAllCubes/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"getAllCubes",
+						""
+					]
+				},
+				"description": "# Get all box API for any user\nIt Will Return the all box after applying all the filter as specifying the filters by the user.\nI have added all the filter which are mentions in the task.\n### condition \n- For more than filter use **gt** (greater than)\n- For less than the value used **lt** (less than) the given value \n- Value either should be float or integer\n- For filter by the username we will use field **created_by**\n- For filter by the date it should be in format **dd/mm/yyyy**\n- We Can either pass the **authorization** token or not this API is for all user "
+			},
+			"response": []
+		},
+		{
+			"name": "Add one Cube (Staff_Only)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 3c32b0bbdf46c0cceac94db465a218f602463130",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"length\":5,\n    \"breadth\":4,\n    \"height\":3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/addCube/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"addCube",
+						""
+					]
+				},
+				"description": "### Add the box in the DB\nFor adding the box we have to satisfy the following condition\n- User should be login \n- **Authorization** token must be present on the header since we are using a token authentication so we need to pass it for authorization.\n- The values of length, breadth and height should be in float or integer string is not acceptable.\n "
+			},
+			"response": []
+		},
+		{
+			"name": "Get My Cubes (Staff_Only, Current_User)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 3c32b0bbdf46c0cceac94db465a218f602463130",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"filters\":{\n        \"length\":{\"condition\":\"gt\",\n                    \"value\": 0\n        },\n        \"breadth\":{\"condition\":\"gt\",\n                    \"value\":0\n        },\n        \"height\":{\"condition\":\"gt\",\n                    \"value\":0\n        },\n        \"volume\":{\"condition\":\"gt\",\n                    \"value\":0\n        },\n        \"area\":{\"condition\":\"gt\",\n                    \"value\":0\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/getMyCubes/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"getMyCubes",
+						""
+					]
+				},
+				"description": "### Getting Box created by any specific user\nFor getting all the box created by me this API will be helpful.\nFor using this API these conditions must be satisfied\n- User must be login \n- User should be staff user \n- Authorization Header must be in the header \nYou can apply all the filter as mentioned in the request body. \n"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Cube with ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 3c32b0bbdf46c0cceac94db465a218f602463130",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":2,\n    \"length\":2,\n    \"breadth\":4,\n    \"height\":4\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/updateCube/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"updateCube",
+						""
+					]
+				},
+				"description": "### Update the Box\nFor updating the box we need to consider the following conditions.\n- User should be login and authorization token must be there in the header.\n- Id of the box must be there \n- Values must be in float and int"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Cube (Creator_Only)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 3c32b0bbdf46c0cceac94db465a218f602463130",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":6\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/deleteCube/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"deleteCube",
+						""
+					]
+				},
+				"description": "### Box Deletion\nFor deleting the box following condition must be fulfilled\n- User should be a staff user and must be login.\n- Only creator of the box can delete the box.\n- Authorization token mus be in the header "
+			},
+			"response": []
+		}
+	]
+}
