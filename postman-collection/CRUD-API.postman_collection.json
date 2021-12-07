@@ -81,7 +81,7 @@
 			"response": []
 		},
 		{
-			"name": "Get All Cubes (Any User)",
+			"name": "Get All Cuboids (Any User)",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -90,7 +90,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Token a41aef09fe1f78e7169b2ae00c82a446bc9225be",
+						"value": "Token b77cf433a96f8e9be36b0000ac3e933514dfb219",
 						"type": "text"
 					}
 				],
@@ -104,7 +104,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/getAllCubes/",
+					"raw": "http://127.0.0.1:8000/api/getAllCuboids/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -115,7 +115,7 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"getAllCubes",
+						"getAllCuboids",
 						""
 					]
 				},
@@ -124,7 +124,7 @@
 			"response": []
 		},
 		{
-			"name": "Add one Cube (Staff_Only)",
+			"name": "Add one Cuboid (Staff_Only)",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -133,13 +133,13 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Token a41aef09fe1f78e7169b2ae00c82a446bc9225be",
+						"value": "Token b77cf433a96f8e9be36b0000ac3e933514dfb219",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"length\":5,\n    \"breadth\":4,\n    \"height\":3\n}",
+					"raw": "{\n    \"length\":1,\n    \"breadth\":1,\n    \"height\":1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -147,7 +147,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/addCube/",
+					"raw": "http://127.0.0.1:8000/api/addCuboid/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -158,7 +158,7 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"addCube",
+						"addCuboid",
 						""
 					]
 				},
@@ -167,7 +167,7 @@
 			"response": []
 		},
 		{
-			"name": "Get My Cubes (Staff_Only, Current_User)",
+			"name": "Get My Cuboids (Staff_Only, Current_User)",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -176,7 +176,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Token a41aef09fe1f78e7169b2ae00c82a446bc9225be",
+						"value": "Token b77cf433a96f8e9be36b0000ac3e933514dfb219",
 						"type": "text"
 					}
 				],
@@ -190,7 +190,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/getMyCubes/",
+					"raw": "http://127.0.0.1:8000/api/getMyCuboids/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -201,7 +201,7 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"getMyCubes",
+						"getMyCuboids",
 						""
 					]
 				},
@@ -210,19 +210,19 @@
 			"response": []
 		},
 		{
-			"name": "Update Cube with ID",
+			"name": "Update Cuboid with ID",
 			"request": {
 				"method": "PUT",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Token a41aef09fe1f78e7169b2ae00c82a446bc9225be",
+						"value": "Token b77cf433a96f8e9be36b0000ac3e933514dfb219",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\":2,\n    \"length\":2,\n    \"breadth\":4,\n    \"height\":4\n}",
+					"raw": "{\n    \"id\":8,\n    \"length\":3,\n    \"breadth\":2,\n    \"height\":1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -230,7 +230,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/updateCube/",
+					"raw": "http://127.0.0.1:8000/api/updateCuboid/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -241,7 +241,7 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"updateCube",
+						"updateCuboid",
 						""
 					]
 				},
@@ -250,19 +250,19 @@
 			"response": []
 		},
 		{
-			"name": "Delete Cube (Creator_Only)",
+			"name": "Delete Cuboid (Creator_Only)",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Token a41aef09fe1f78e7169b2ae00c82a446bc9225be",
+						"value": "Token b77cf433a96f8e9be36b0000ac3e933514dfb219",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\":2\n}",
+					"raw": "{\n    \"id\":8\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -270,7 +270,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/deleteCube/",
+					"raw": "http://127.0.0.1:8000/api/deleteCuboid/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -281,7 +281,7 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"deleteCube",
+						"deleteCuboid",
 						""
 					]
 				},

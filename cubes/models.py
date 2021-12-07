@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 
-class Cube(models.Model):
+class Cuboid(models.Model):
     length = models.FloatField()
     breadth = models.FloatField()
     height = models.FloatField()

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Cube
+from .models import Cuboid
 
 # Register your models here.
 
@@ -11,4 +11,4 @@ class CubeAdmin(admin.ModelAdmin):
     search_fields = ['length', 'breadth', 'height', 'area', 'volume', 'created_by__username']
 
 
-admin.site.register(Cube,CubeAdmin)
+admin.site.register(Cuboid, CubeAdmin)

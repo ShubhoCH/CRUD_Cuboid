@@ -1,10 +1,10 @@
 import json
-from .models import Cube
+from .models import Cuboid
 from django.http import HttpResponse
 from .serializers import BoxSerializers
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User
-from Cuboids.settings import A1 , V1 , L1 , L2
+from Cuboids.settings import A1, V1, L1, L2
 from rest_framework.permissions import AllowAny
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate, login
@@ -22,23 +22,23 @@ def createResponse(status, message, data=None):
     return HttpResponse(json.dumps(response), content_type='text/javascript')
 
 #Helper function for Cube Validation Check:
-def isValid(Cubes, length, breadth, height, area, volume, user):
-    cube_count = Cubes.count()
-    areas = list(Cubes.values_list("area", flat=True))
+def isValid(Cuboids, length, breadth, height, area, volume, user):
+    cuboid_count = Cuboids.count()
+    areas = list(Cuboids.values_list("area", flat=True))
 
-    if (sum(areas) + area)/(cube_count+1) > A1:
+    if (sum(areas) + area)/(cuboid_count+1) > A1:
         return createResponse("FAILURE","Average area of a cube shouldn't exceed " + str(A1))
 
-    volumes = list(Cubes.values_list("volume", flat=True))
-    if (sum(volumes) + volume)/(cube_count+1) > V1:
-        return createResponse("FAILURE",  "Average volume of a Cube shouldn't exceed " + str(V1))
+    volumes = list(Cuboids.values_list("volume", flat=True))
+    if (sum(volumes) + volume)/(cuboid_count+1) > V1:
+        return createResponse("FAILURE",  "Average volume of all Cuboid added shouldn't exceed " + str(V1))
 
     week = datetime.today() - timedelta(days=7)
-    box_week_count = Cube.objects.filter(date_of_creation__gte = week).count()
+    box_week_count = Cuboid.objects.filter(date_of_creation__gte = week).count()
     if box_week_count > L1:
         return createResponse("FAILURE", "Number of the Cubes added in this week has exceeded " + str(L1))
 
-    box_user_week_count = Cube.objects.filter(date_of_creation__gte = week, created_by = user).count()
+    box_user_week_count = Cuboid.objects.filter(date_of_creation__gte = week, created_by = user).count()
     if box_user_week_count > L2:
         return createResponse("FAILURE", "Number of the Cubes added by You has exceeded " + str(L2))
     return False;
@@ -87,7 +87,7 @@ def loginUser(request):
 # Add New Cube for the current User:
 @csrf_exempt
 @api_view(["POST"])
-def addCube(request):
+def addCuboid(request):
     if request.user.is_staff:
         global A1, V1, L1, L2
         request_data = json.loads(request.body.decode("utf-8"))
@@ -99,14 +99,14 @@ def addCube(request):
         height = request_data["height"]
         area = 2 * (length * breadth + breadth * height + height * length)
         volume = length * breadth * height
-        Cubes = Cube.objects.all()
+        Cuboids = Cuboid.objects.all()
         # Check if Conditions for adding the Cube is Valid or Not? If not return with message:
-        if Cubes.count() != 0:
-            res = isValid(Cubes, length, breadth, height, area, volume, request.user)
+        if Cuboids.count() != 0:
+            res = isValid(Cuboids, length, breadth, height, area, volume, request.user)
             if(res):
                 return res
         # Add the Cube to the Database as it passed all requirements:
-        Cube.objects.create(length=length, breadth=breadth, height=height, area=area, volume=volume, created_by=request.user)
+        Cuboid.objects.create(length=length, breadth=breadth, height=height, area=area, volume=volume, created_by=request.user)
         return createResponse("SUCCESS","Cube is added successfully.")
     else:
         # If the User is not a Staff member:
@@ -115,30 +115,30 @@ def addCube(request):
 # Update Existing Cube with a particular ID:
 @csrf_exempt
 @api_view(["PUT"])
-def updateCube(request):
+def updateCuboid(request):
     if request.user.is_staff:
         global A1,V1
         request_data = json.loads(request.body.decode("utf-8"))
         if "id" not in request_data or request_data["id"] == "":
             return createResponse("FAILURE", "Either id is null or id is not present")
-        if Cube.objects.filter(id = request_data["id"]).exists():
-            cube = Cube.objects.get(id=request_data["id"])
+        if Cuboid.objects.filter(id = request_data["id"]).exists():
+            cuboid = Cuboid.objects.get(id=request_data["id"])
             if "length" not in request_data:
-                length = cube.length
+                length = cuboid.length
             else:
                 length = request_data["length"]
             if "breadth" not in request_data:
-                breadth = cube.breadth
+                breadth = cuboid.breadth
             else:
                 breadth = request_data["breadth"]
             if "height" not in request_data:
-                height  = cube.height
+                height  = cuboid.height
             else:
                 height = request_data["height"]
 
             area = 2*( length * breadth + breadth * height + height * length )
             volume = length * breadth * height
-            boxes = Cube.objects.all()
+            boxes = Cuboid.objects.all()
             boxes = boxes.exclude(id = request_data['id'])
             box_count = boxes.count()
 
@@ -149,12 +149,12 @@ def updateCube(request):
             volumes = list(boxes.values_list("volume", flat=True))
             if (sum(volumes) + volume) / (box_count + 1) > V1:
                 return createResponse("FAILURE","Average volume of the boxes shouldn't exceed " + str(V1))
-            cube.length = length
-            cube.breadth = breadth
-            cube.height = height
-            cube.area = area
-            cube.volume = volume
-            cube.save()
+            cuboid.length = length
+            cuboid.breadth = breadth
+            cuboid.height = height
+            cuboid.area = area
+            cuboid.volume = volume
+            cuboid.save()
             return createResponse("SUCCESS", "Box is Updated successfully.")
         else:
             return createResponse("FAILURE", "Box with given id is not exist.")
@@ -164,14 +164,14 @@ def updateCube(request):
 # Delete Cube with a Given ID:
 @csrf_exempt
 @api_view(["POST"])
-def deleteCube(request):
+def deleteCuboid(request):
     if request.user.is_staff:
         request_data = json.loads(request.body.decode("utf-8"))
         #if user doesn't send the id by mistake
         if "id" not in request_data or request_data["id"] == "":
             return createResponse("FAILURE", "Either id is null or id is not present")
-        if Cube.objects.filter(id=request_data["id"]).exists():
-            box  = Cube.objects.get(id = request_data["id"])
+        if Cuboid.objects.filter(id=request_data["id"]).exists():
+            box  = Cuboid.objects.get(id = request_data["id"])
             # If the user is not the Creator of the Box:
             if request.user != box.created_by:
                 return createResponse("FAILURE", "Only creator of Cube can delete the Cube.")
@@ -204,7 +204,7 @@ def filterFunction(filters, request, user = None):
     # For my Cube api
     if user is not None:
         filter_query["created_by"] = user
-    Cubes = Cube.objects.filter(**filter_query)
+    Cubes = Cuboid.objects.filter(**filter_query)
     filtered_Cube = BoxSerializers(Cubes,many=True, context={"request":request})
     return filtered_Cube.data
 
@@ -212,7 +212,7 @@ def filterFunction(filters, request, user = None):
 @csrf_exempt
 @api_view(["GET"])
 @permission_classes([AllowAny])
-def getAllCubes(request):
+def getAllCuboids(request):
     filter_data = json.loads(request.body.decode("utf-8"))
     return createResponse("SUCCESS", "",filterFunction(filter_data["filters"],request))
 
@@ -220,7 +220,7 @@ def getAllCubes(request):
 # Get All the Cubes Created By the Current User:
 @csrf_exempt
 @api_view(["GET"])
-def getMyCubes(request):
+def getMyCuboids(request):
     if request.user.is_staff:
         filter_data = json.loads(request.body.decode("utf-8"))
         return createResponse("SUCCESS", "", filterFunction(filter_data["filters"], request, request.user))

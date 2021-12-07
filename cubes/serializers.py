@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Cube
+from .models import Cuboid
 
 class BoxSerializers(serializers.ModelSerializer):
     #only username should be there  not id and object in response
@@ -16,5 +16,5 @@ class BoxSerializers(serializers.ModelSerializer):
         rep.pop("date_of_creation")
         return rep
     class Meta:
-        model = Cube
+        model = Cuboid
         fields = '__all__'
