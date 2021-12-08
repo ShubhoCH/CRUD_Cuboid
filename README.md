@@ -1,5 +1,5 @@
 # How to use:
-- Create a virtual environment with the python version should 3.6.9.
+- Create a virtual environment with the python version should 3.10.0.
 - Extract the zip file of the projects
 - Activate the virtual environment and run the following command:
     * pip install -r requirements.txt
